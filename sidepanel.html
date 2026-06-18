@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nate's Stock Tracker</title>
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📈 Nate's Stock Tracker</h1>
+            <button id="settingsBtn" class="settings-btn">⚙️</button>
+        </header>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button class="close-btn" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="apiKey">Anthropic API Key:</label>
+                        <input type="password" id="apiKey" placeholder="sk-ant-..." />
+                        <small>Your API key is stored locally and never shared</small>
+                    </div>
+                    <button id="saveSettings" class="btn btn-primary">Save Settings</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Data Display -->
+        <section class="data-section">
+            <div class="data-header">
+                <h2 id="symbolDisplay">--</h2>
+                <div id="priceDisplay" class="price-display">
+                    <span id="currentPrice">--</span>
+                    <span id="priceChange" class="price-change">--</span>
+                </div>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <div class="card-label">Timeframe</div>
+                    <div id="timeframeDisplay" class="card-value">--</div>
+                </div>
+                <div class="data-card">
+                    <div class="card-label">Volume</div>
+                    <div id="volumeDisplay" class="card-value">--</div>
+                </div>
+                <div class="data-card">
+                    <div class="card-label">52W High</div>
+                    <div id="high52wDisplay" class="card-value">--</div>
+                </div>
+                <div class="data-card">
+                    <div class="card-label">52W Low</div>
+                    <div id="low52wDisplay" class="card-value">--</div>
+                </div>
+                <div class="data-card">
+                    <div class="card-label">P/E Ratio</div>
+                    <div id="peRatioDisplay" class="card-value">--</div>
+                </div>
+                <div class="data-card">
+                    <div class="card-label">RSI</div>
+                    <div id="rsiDisplay" class="card-value">--</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Indicators -->
+        <section class="indicators-section">
+            <h3>Technical Indicators</h3>
+            <div class="indicators-grid">
+                <div class="indicator-card">
+                    <span class="indicator-label">MA20:</span>
+                    <span id="ma20Display" class="indicator-value">--</span>
+                </div>
+                <div class="indicator-card">
+                    <span class="indicator-label">MA50:</span>
+                    <span id="ma50Display" class="indicator-value">--</span>
+                </div>
+                <div class="indicator-card">
+                    <span class="indicator-label">MA200:</span>
+                    <span id="ma200Display" class="indicator-value">--</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support/Resistance -->
+        <section class="levels-section">
+            <h3>Support & Resistance</h3>
+            <div class="levels-container">
+                <div class="levels-group">
+                    <h4>Resistance</h4>
+                    <div id="resistanceList" class="levels-list">--</div>
+                </div>
+                <div class="levels-group">
+                    <h4>Support</h4>
+                    <div id="supportList" class="levels-list">--</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Claude AI Chat -->
+        <section class="chat-section">
+            <h3>💬 AI Analysis</h3>
+            <div id="chatContainer" class="chat-container"></div>
+            <div class="chat-input-area">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    placeholder="Ask me about this stock..."
+                    class="chat-input"
+                />
+                <button id="sendBtn" class="btn btn-send">Send</button>
+            </div>
+        </section>
+
+        <!-- Watchlist -->
+        <section class="watchlist-section">
+            <h3>⭐ Watchlist</h3>
+            <div id="watchlistContainer" class="watchlist-container"></div>
+            <button id="addToWatchlistBtn" class="btn btn-secondary">Add Current</button>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Analyzing...</p>
+        </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "nates-stock-tracker",
+  "version": "1.0.0",
+  "description": "Advanced TradingView tracker with real-time Claude AI analysis",
+  "author": "Nate",
+  "license": "MIT",
+  "scripts": {
+    "dev": "echo 'Load unpacked in Chrome at chrome://extensions'",
+    "build": "echo 'No build needed - this is a direct Chrome extension'"
+  },
+  "devDependencies": {}
+}
