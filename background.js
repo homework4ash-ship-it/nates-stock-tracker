@@ -3,7 +3,6 @@
  * Handles communication between content script, sidepanel, and Claude API
  */
 
-const ANTHROPIC_API_KEY = null; // User will set this
 const STORAGE_KEYS = {
   API_KEY: 'anthropic_api_key',
   WATCH_LIST: 'watchlist',
@@ -125,7 +124,6 @@ Always consider risk management and mention potential risks.`;
       this.priceHistory[symbol] = [];
     }
     this.priceHistory[symbol].push({ price, timestamp });
-    // Keep only last 1000 entries
     if (this.priceHistory[symbol].length > 1000) {
       this.priceHistory[symbol].shift();
     }
@@ -139,6 +137,11 @@ Always consider risk management and mention potential risks.`;
 
 const tracker = new StockTrackerBackground();
 
+// Handle extension icon click to open side panel
+chrome.action.onClicked.addListener((tab) => {
+  chrome.sidePanel.open({ tabId: tab.id });
+});
+
 // Listen for messages from sidepanel and content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'chartDataUpdate') {
@@ -150,7 +153,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     tracker.sendToClaude(request.message, request.context).then(response => {
       sendResponse(response);
     });
-    return true; // Will respond asynchronously
+    return true;
   } else if (request.action === 'setApiKey') {
     tracker.setApiKey(request.apiKey).then(() => {
       sendResponse({ success: true });
@@ -172,10 +175,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-// Handle side panel command
-chrome.commands.onCommand.addListener((command) => {
+// Handle keyboard shortcut
+chrome.commands.onCommand.addListener((command, tab) => {
   if (command === 'toggle-side-panel') {
-    chrome.sidePanel.open({ tabId: sender?.tab?.id });
+    chrome.sidePanel.open({ tabId: tab.id });
   }
 });
 
@@ -189,4 +192,4 @@ setInterval(() => {
       return new Date(entry.timestamp).getTime() > oneDayAgo;
     });
   });
-}, 60 * 60 * 1000); // Run every hour
+}, 60 * 60 * 1000);
